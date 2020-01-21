@@ -9,32 +9,35 @@ func fillGraph() *ItemGraph {
 	nD := Node{"D"}
 	nE := Node{"E"}
 	nF := Node{"F"}
+	nG := Node{"G"}
 	graph.AddNode(&nA)
 	graph.AddNode(&nB)
 	graph.AddNode(&nC)
 	graph.AddNode(&nD)
 	graph.AddNode(&nE)
 	graph.AddNode(&nF)
+	graph.AddNode(&nG)
 
+	// graph.AddEdge(&nA, &nB)
+	// graph.AddEdge(&nA, &nC)
+	// graph.AddEdge(&nB, &nE)
+	// graph.AddEdge(&nC, &nE)
+	// graph.AddEdge(&nC, &nF)
+	// graph.AddEdge(&nE, &nF)
+	// graph.AddEdge(&nD, &nA)
 	graph.AddEdge(&nA, &nB)
-	graph.AddEdge(&nA, &nC)
+	graph.AddEdge(&nB, &nA)
+	graph.AddEdge(&nB, &nC)
 	graph.AddEdge(&nB, &nE)
+	graph.AddEdge(&nB, &nD)
 	graph.AddEdge(&nC, &nE)
-	graph.AddEdge(&nC, &nF)
+	graph.AddEdge(&nD, &nE)
+	graph.AddEdge(&nD, &nG)
 	graph.AddEdge(&nE, &nF)
-	graph.AddEdge(&nD, &nA)
 	return &graph
 }
 
 func main() {
 	graph := fillGraph()
-	graph.Print()
-	// graph.BFS()
-
-	dp := DataPath{}
-	dataPath := dp.NewListPath()
-	firstList := dataPath.InsertNewPath("A")
-	dataPath.CopyPathAddNewItem(firstList, "B")
-	dataPath.Print()
-	// pretty.Print(dataPath.listPath.Back())
+	graph.BFS()
 }

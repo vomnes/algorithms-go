@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // type ItemGraph struct {
 // 	nodes []*Node
 // 	edges map[Node][]*Node
@@ -11,27 +9,33 @@ import "fmt"
 // BFS Travers a graph using BFS algorithm
 func (g *ItemGraph) BFS() {
 	g.lock.RLock()
-	paths := make([][]string, 0)
-
 	q := NodeQueue{}
 	queue := q.New()
 	queue.Enqueue(*g.nodes[0])
 	visited := make(map[Node]bool)
+	dp := DataPath{}
+	dataPath := dp.NewListPath()
+	dataPath.InsertNewPath(g.nodes[0].String())
+	hasEdges := false
 	for {
 		if queue.IsEmpty() {
 			break
 		}
 		currentNode := queue.Dequeue()
 		visited[*currentNode] = true
-		paths = append(paths, []string{currentNode.String()})
 		for _, childNode := range g.edges[*currentNode] {
-			fmt.Println(childNode)
 			if !visited[*childNode] {
 				queue.Enqueue(*childNode)
 				visited[*childNode] = true
+				dataPath.Growth(currentNode.String(), childNode.String())
+				// fmt.Println(currentNode.String(), childNode.String())
+				hasEdges = true
 			}
 		}
+		if hasEdges {
+			// dataPath.RemovePath(currentNode.String())
+		}
 	}
-	// fmt.Println(paths)
+	dataPath.Print()
 	g.lock.RUnlock()
 }
