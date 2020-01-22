@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var graph ItemGraph
 
 func fillGraph() *ItemGraph {
@@ -25,14 +27,21 @@ func fillGraph() *ItemGraph {
 	// graph.AddEdge(&nC, &nF)
 	// graph.AddEdge(&nE, &nF)
 	// graph.AddEdge(&nD, &nA)
+	// -->
+	// graph.AddEdge(&nA, &nB)
+	// graph.AddEdge(&nB, &nC)
+	// graph.AddEdge(&nB, &nE)
+	// graph.AddEdge(&nB, &nD)
+	// graph.AddEdge(&nC, &nE)
+	// graph.AddEdge(&nD, &nE)
+	// graph.AddEdge(&nD, &nG)
+	// graph.AddEdge(&nE, &nF)
 	graph.AddEdge(&nA, &nB)
-	graph.AddEdge(&nB, &nA)
-	graph.AddEdge(&nB, &nC)
-	graph.AddEdge(&nB, &nE)
+	graph.AddEdge(&nA, &nC)
+	graph.AddEdge(&nA, &nE)
 	graph.AddEdge(&nB, &nD)
-	graph.AddEdge(&nC, &nE)
-	graph.AddEdge(&nD, &nE)
-	graph.AddEdge(&nD, &nG)
+	graph.AddEdge(&nB, &nF)
+	graph.AddEdge(&nC, &nG)
 	graph.AddEdge(&nE, &nF)
 	return &graph
 }
@@ -40,4 +49,6 @@ func fillGraph() *ItemGraph {
 func main() {
 	graph := fillGraph()
 	graph.BFS()
+	fmt.Println("----")
+	graph.DFS()
 }

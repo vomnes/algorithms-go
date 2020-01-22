@@ -1,12 +1,14 @@
 package main
 
+import "fmt"
+
 // type ItemGraph struct {
 // 	nodes []*Node
 // 	edges map[Node][]*Node
 // 	lock  sync.RWMutex
 // }
 
-// BFS Travers a graph using BFS algorithm
+// BFS is the BFS algorithm implementation
 func (g *ItemGraph) BFS() {
 	// hasEdges is a boolean that allows to check if we need to remove the
 	// previous paths that have been updated
@@ -28,6 +30,7 @@ func (g *ItemGraph) BFS() {
 		currentNode := queue.Dequeue()
 		visited[*currentNode] = true
 		hasEdges = false
+		fmt.Println("Node visited:", currentNode)
 		for _, childNode := range g.edges[*currentNode] {
 			if !visited[*childNode] {
 				queue.Enqueue(*childNode)
