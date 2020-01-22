@@ -36,14 +36,16 @@ func (d *DataPath) InsertNewPath(item string) []string {
 // CopyPathAddNewItem allows to duplicate a list and append a new item
 // to this list
 func (d *DataPath) CopyPathAddNewItem(toCopy []string, newItem string) []string {
-	toCopy = append(toCopy, newItem)
+	tmpList := make([]string, len(toCopy))
+	copy(tmpList, toCopy)
+	tmpList = append(tmpList, newItem)
 	d.listPath.PushBack(
 		path{
-			list:         toCopy,
+			list:         tmpList,
 			lastItemName: newItem,
 		},
 	)
-	return toCopy
+	return tmpList
 }
 
 // RemovePath allows to remove a given path from the path list
