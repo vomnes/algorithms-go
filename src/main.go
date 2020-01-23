@@ -3,14 +3,14 @@ package main
 var graph ItemGraph
 
 func fillGraph() *ItemGraph {
-	nA := Node{"A"}
-	nB := Node{"B"}
-	nC := Node{"C"}
-	nD := Node{"D"}
-	nE := Node{"E"}
-	nF := Node{"F"}
-	nG := Node{"G"}
-	nH := Node{"H"}
+	nA := Node{HeuristicItem{"A", 6}}
+	nB := Node{HeuristicItem{"B", 6}}
+	nC := Node{HeuristicItem{"C", 4}}
+	nD := Node{HeuristicItem{"D", 5}}
+	nE := Node{HeuristicItem{"E", 4}}
+	nF := Node{HeuristicItem{"F", 4}}
+	nG := Node{HeuristicItem{"G", 1}}
+	nH := Node{HeuristicItem{"H", 2}}
 	nI := Node{"I"}
 	nJ := Node{"J"}
 	nK := Node{"K"}
@@ -58,17 +58,17 @@ func fillGraph() *ItemGraph {
 	//	 D   F	G   |
 	//	 		 	\		 /
 	//				  --
-	graph.AddEdge(&nA, &nB)
-	graph.AddEdge(&nA, &nG)
-	graph.AddEdge(&nA, &nH)
-	graph.AddEdge(&nB, &nC)
-	graph.AddEdge(&nB, &nF)
-	graph.AddEdge(&nC, &nD)
-	graph.AddEdge(&nC, &nE)
-	graph.AddEdge(&nH, &nI)
-	graph.AddEdge(&nH, &nL)
-	graph.AddEdge(&nI, &nJ)
-	graph.AddEdge(&nI, &nK)
+	// graph.AddEdge(&nA, &nB)
+	// graph.AddEdge(&nA, &nG)
+	// graph.AddEdge(&nA, &nH)
+	// graph.AddEdge(&nB, &nC)
+	// graph.AddEdge(&nB, &nF)
+	// graph.AddEdge(&nC, &nD)
+	// graph.AddEdge(&nC, &nE)
+	// graph.AddEdge(&nH, &nI)
+	// graph.AddEdge(&nH, &nL)
+	// graph.AddEdge(&nI, &nJ)
+	// graph.AddEdge(&nI, &nK)
 	//						A
 	//					/ | \
 	//				B		G		H
@@ -76,6 +76,14 @@ func fillGraph() *ItemGraph {
 	//		C		F		I			L
 	//	/	\			/	\
 	// D	E		J		K
+	graph.AddEdge(&nA, &nB, 7)
+	graph.AddEdge(&nB, &nC, 3)
+	graph.AddEdge(&nC, &nD, 2)
+	graph.AddEdge(&nD, &nE, 2)
+	graph.AddEdge(&nD, &nF, 6)
+	graph.AddEdge(&nE, &nF, 3)
+	graph.AddEdge(&nE, &nG, 4)
+	graph.AddEdge(&nF, &nH, 3)
 	return &graph
 }
 
@@ -83,5 +91,6 @@ func main() {
 	graph := fillGraph()
 	// graph.BFS()
 	// fmt.Println("----")
-	graph.DFS()
+	// graph.DFS()
+	graph.AStar()
 }
