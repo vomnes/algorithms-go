@@ -9,6 +9,6 @@ build:
 	@go build -v -o ./bin/graph-algorithms ./src/*.go
 
 exec:
-	@./graph-algorithms
+	@./bin/graph-algorithms
 
 run: build exec
