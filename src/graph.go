@@ -28,6 +28,8 @@ type ItemGraph struct {
 	edges       map[Node][]*Node
 	edgesWeight map[Node][]int
 	lock        sync.RWMutex
+	start       *Node
+	end         *Node
 }
 
 // AddNode adds a node to the graph
@@ -87,4 +89,29 @@ func (g *ItemGraph) GetHeuristicValue(node *Node) int {
 		}
 	}
 	return -1
+}
+
+// SetStart select the start graph node
+func (g *ItemGraph) SetStart(node *Node) {
+	g.start = node
+}
+
+// SetEnd select the end graph node
+func (g *ItemGraph) SetEnd(node *Node) {
+	g.end = node
+}
+
+// GetStart return the start graph node
+func (g *ItemGraph) GetStart() *Node {
+	return g.start
+}
+
+// GetEnd return the end graph node
+func (g *ItemGraph) GetEnd() *Node {
+	return g.end
+}
+
+// IsEndNode return true if the end node in parameter is equal to selected end node
+func (g *ItemGraph) IsEndNode(e *Node) bool {
+	return e.value == g.GetEnd().value
 }

@@ -32,11 +32,18 @@ func (s *AStarData) New() *AStarData {
 	return s
 }
 
+// Init creates the inital nodes
+func (s *AStarData) Init(nodes []*Node) {
+	for _, node := range nodes {
+		s.AddItem(*node)
+	}
+}
+
 // AddItem adds a new elem to the A Star data
 func (s *AStarData) AddItem(e Node) {
 	s.lock.Lock()
 	s.items[e] = elem{
-		inOpenSet: true,
+		inOpenSet: false,
 		score: score{
 			g: math.MaxInt32,
 			f: math.MaxInt32,
@@ -97,20 +104,20 @@ func (s *AStarData) SetInOpenSet(e Node) {
 
 // GetLowestFScoreNodeInOpenSet ...
 func (s *AStarData) GetLowestFScoreNodeInOpenSet() *Node {
-	var node *Node
+	var node Node
 	tmpMin := math.MaxInt32
 	for checkedNode, elem := range s.items {
 		if elem.inOpenSet == true {
 			if elem.score.f <= tmpMin {
 				tmpMin = elem.score.f
-				node = &checkedNode
+				node = checkedNode
 			}
 		}
 	}
-	if node == nil {
+	if &node == nil {
 		log.Fatal("GetLowestFScoreNodeInOpenSet: Node is nil")
 	}
-	return node
+	return &node
 }
 
 // Print print the a star data
