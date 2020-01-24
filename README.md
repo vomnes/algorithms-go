@@ -45,8 +45,8 @@ Specifically, A* selects the path that minimizes :
 
 > f(n) = g(n) + h(n)
 
-*g(n)* is the cost of the path from the start node to n
-*h(n)* is a heuristic function that estimates the cost of the cheapest path from n to the goal for example using a [Euclidean distance formula](https://en.wikipedia.org/wiki/Euclidean_distance)
+- *g(n)* is the cost of the path from the start node to n  
+- *h(n)* is a heuristic function that estimates the cost of the cheapest path from n to the goal for example using a [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) formula  
 (_Source Wikipedia_)
 
 ### Pseudocode
