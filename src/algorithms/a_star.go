@@ -1,47 +1,48 @@
-package main
+package algorithms
 
 import "fmt"
+import models "../models"
 
-func (d *AStarData) reconstructPath(startNode, lastNode *Node) []string {
-	var currentNode Node
+func reconstructPath(d *models.AStarData, startNode, lastNode *models.Node) []string {
+	var currentNode models.Node
 	path := []string{}
 	currentNode = *lastNode
 	for {
-		path = append([]string{currentNode.value.(HeuristicItem).data}, path...)
-		if currentNode.value == startNode.value {
+		path = append([]string{currentNode.Value.(models.HeuristicItem).Data}, path...)
+		if currentNode.Value == startNode.Value {
 			break
 		}
-		currentNode = d.items[currentNode].cameFrom
+		currentNode = d.GetCameFrom(&currentNode)
 	}
 	return path
 }
 
 // AStar is the A* algorithm implementation
-func (g *ItemGraph) AStar() {
-	var currentNode *Node
+func AStar(g *models.ItemGraph) {
+	var currentNode *models.Node
 	var tentativeGScore int
 	// Init A Star Data
-	aStarData := AStarData{}
+	aStarData := models.AStarData{}
 	d := aStarData.New()
-	d.Init(g.nodes)
-	start := *g.nodes[0]
+	d.Init(g.GetNodes())
+	start := *g.GetStart()
 	d.SetInOpenSet(start)
 	d.SetGScore(start, 0)
-	d.SetFScore(start, start.value.(HeuristicItem).heuristic)
+	d.SetFScore(start, start.Value.(models.HeuristicItem).Heuristic)
 	for {
 		if d.OpenSetIsEmpty() {
 			break
 		}
 		currentNode = d.GetLowestFScoreNodeInOpenSet()
 		if g.IsEndNode(currentNode) {
-			fmt.Println(d.reconstructPath(g.GetStart(), g.GetEnd()))
+			fmt.Println(reconstructPath(d, g.GetStart(), g.GetEnd()))
 			break
 		}
 		d.RemoveItemFromOpenSet(*currentNode)
-		for indexChildNode, childNode := range g.edges[*currentNode] {
+		for indexChildNode, childNode := range g.GetEdges(currentNode) {
 			tentativeGScore = d.GetGScore(*currentNode) + g.GetDistance(currentNode, indexChildNode)
 			if tentativeGScore < d.GetGScore(*childNode) {
-				d.SetComeFrom(*childNode, *currentNode)
+				d.SetCameFrom(*childNode, *currentNode)
 				d.SetGScore(*childNode, tentativeGScore)
 				d.SetFScore(*childNode, d.GetGScore(*childNode)+g.GetHeuristicValue(childNode))
 				d.SetInOpenSet(*childNode)

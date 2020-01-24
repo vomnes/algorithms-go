@@ -1,7 +1,9 @@
-package main
+package algorithms
 
 import (
 	"fmt"
+
+	"../models"
 )
 
 // ItemGraph the Items graph
@@ -12,23 +14,22 @@ import (
 // }
 
 // DFS is the DFS algorithm implementation
-func (g *ItemGraph) DFS() {
-	var s *NodeStack
-	var currentNode *Node
-	g.lock.RLock()
+func DFS(g *models.ItemGraph) {
+	var s *models.NodeStack
+	var currentNode *models.Node
 	// hasEdges is a boolean that allows to check if we need to remove the
 	// previous paths that have been updated
 	var hasEdges bool
 	// Init stack
-	stack := NodeStack{}
+	stack := models.NodeStack{}
 	s = stack.New()
-	s.Push(*g.nodes[0])
+	s.Push(*g.GetStart())
 	// Visited map
-	visited := make(map[Node]bool)
+	visited := make(map[models.Node]bool)
 	// Init Path List
-	dp := DataPath{}
+	dp := models.DataPath{}
 	dataPath := dp.NewListPath()
-	dataPath.InsertNewPath(g.nodes[0].String())
+	dataPath.InsertNewPath(g.GetStart().String())
 	for {
 		if stack.IsEmpty() {
 			break
@@ -38,7 +39,7 @@ func (g *ItemGraph) DFS() {
 		if !visited[*currentNode] {
 			visited[*currentNode] = true
 			fmt.Println("Node visited:", currentNode)
-			for _, childNode := range g.edges[*currentNode] {
+			for _, childNode := range g.GetEdges(currentNode) {
 				s.Push(*childNode)
 				if !visited[*childNode] {
 					dataPath.Growth(currentNode.String(), childNode.String())
@@ -51,5 +52,4 @@ func (g *ItemGraph) DFS() {
 		}
 	}
 	dataPath.Print()
-	g.lock.RUnlock()
 }

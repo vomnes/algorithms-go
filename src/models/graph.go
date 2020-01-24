@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"fmt"
@@ -9,17 +9,17 @@ type item interface{}
 
 // Node a single node that composes the tree
 type Node struct {
-	value item
+	Value item
 }
 
 // HeuristicItem is the value of the node with heuristic information
 type HeuristicItem struct {
-	data      string
-	heuristic int
+	Data      string
+	Heuristic int
 }
 
 func (n *Node) String() string {
-	return fmt.Sprintf("%v", n.value)
+	return fmt.Sprintf("%v", n.Value)
 }
 
 // ItemGraph the Items graph
@@ -85,7 +85,7 @@ func (g *ItemGraph) GetDistance(node *Node, edgeIndex int) int {
 func (g *ItemGraph) GetHeuristicValue(node *Node) int {
 	for _, elem := range g.nodes {
 		if elem == node {
-			return node.value.(HeuristicItem).heuristic
+			return node.Value.(HeuristicItem).Heuristic
 		}
 	}
 	return -1
@@ -111,7 +111,22 @@ func (g *ItemGraph) GetEnd() *Node {
 	return g.end
 }
 
+// GetNodes return the nodes of the graph
+func (g *ItemGraph) GetNodes() []*Node {
+	return g.nodes
+}
+
+// GetEdges return the edges of a given node
+func (g *ItemGraph) GetEdges(node *Node) []*Node {
+	return g.edges[*node]
+}
+
 // IsEndNode return true if the end node in parameter is equal to selected end node
 func (g *ItemGraph) IsEndNode(e *Node) bool {
-	return e.value == g.GetEnd().value
+	return e.Value == g.GetEnd().Value
+}
+
+// IsStartNode return true if the start node in parameter is equal to selected end node
+func (g *ItemGraph) IsStartNode(e *Node) bool {
+	return e.Value == g.GetStart().Value
 }

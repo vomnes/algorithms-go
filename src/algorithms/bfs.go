@@ -1,6 +1,10 @@
-package main
+package algorithms
 
-import "fmt"
+import (
+	"fmt"
+
+	"../models"
+)
 
 // type ItemGraph struct {
 // 	nodes []*Node
@@ -9,20 +13,19 @@ import "fmt"
 // }
 
 // BFS is the BFS algorithm implementation
-func (g *ItemGraph) BFS() {
+func BFS(g *models.ItemGraph) {
 	// hasEdges is a boolean that allows to check if we need to remove the
 	// previous paths that have been updated
 	var hasEdges bool
-	g.lock.RLock()
-	visited := make(map[Node]bool)
+	visited := make(map[models.Node]bool)
 	// Init queue
-	q := NodeQueue{}
+	q := models.NodeQueue{}
 	queue := q.New()
-	queue.Enqueue(*g.nodes[0])
+	queue.Enqueue(*g.GetStart())
 	// Init Path List
-	dp := DataPath{}
+	dp := models.DataPath{}
 	dataPath := dp.NewListPath()
-	dataPath.InsertNewPath(g.nodes[0].String())
+	dataPath.InsertNewPath(g.GetStart().String())
 	for {
 		if queue.IsEmpty() {
 			break
@@ -31,7 +34,7 @@ func (g *ItemGraph) BFS() {
 		visited[*currentNode] = true
 		hasEdges = false
 		fmt.Println("Node visited:", currentNode)
-		for _, childNode := range g.edges[*currentNode] {
+		for _, childNode := range g.GetEdges(currentNode) {
 			if !visited[*childNode] {
 				queue.Enqueue(*childNode)
 				visited[*childNode] = true
@@ -44,5 +47,4 @@ func (g *ItemGraph) BFS() {
 		}
 	}
 	dataPath.Print()
-	g.lock.RUnlock()
 }

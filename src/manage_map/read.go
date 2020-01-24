@@ -5,13 +5,11 @@ import (
 	"log"
 	"os"
 	"strings"
-
-	"github.com/kr/pretty"
 )
 
-// Exec execute map
-func Exec() {
-	file, err := os.Open("/Users/vomnes/Documents/programming/graph-algorithms-go/input/maze.map")
+// StoreInputMap read the path file and store the data in an structure
+func StoreInputMap(path string) *DataMap {
+	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,8 +36,8 @@ func Exec() {
 		}, scanner.Text())
 		y++
 	}
-	pretty.Print(m)
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+	return m
 }

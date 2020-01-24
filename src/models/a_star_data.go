@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"fmt"
@@ -84,8 +84,8 @@ func (s *AStarData) GetGScore(e Node) int {
 	return s.items[e].score.g
 }
 
-// SetComeFrom set the comeFrom value of the selected node
-func (s *AStarData) SetComeFrom(e Node, value Node) {
+// SetCameFrom set the comeFrom value of the selected node
+func (s *AStarData) SetCameFrom(e Node, value Node) {
 	s.lock.Lock()
 	data := s.items[e]
 	data.cameFrom = value
@@ -118,6 +118,11 @@ func (s *AStarData) GetLowestFScoreNodeInOpenSet() *Node {
 		log.Fatal("GetLowestFScoreNodeInOpenSet: Node is nil")
 	}
 	return &node
+}
+
+// GetCameFrom return the comeFrom value of a given node
+func (s *AStarData) GetCameFrom(node *Node) Node {
+	return s.items[*node].cameFrom
 }
 
 // Print print the a star data
