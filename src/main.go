@@ -1,5 +1,9 @@
 package main
 
+import (
+	_map "./manage_map"
+)
+
 var graph ItemGraph
 
 func fillGraph() *ItemGraph {
@@ -115,9 +119,11 @@ func fillGraph() *ItemGraph {
 }
 
 func main() {
-	graph := fillGraph()
+	// graph := fillGraph()
 	// graph.BFS()
 	// fmt.Println("----")
 	// graph.DFS()
-	graph.AStar()
+	// graph.AStar()
+
+	_map.Exec()
 }
