@@ -5,10 +5,12 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"../models"
 )
 
 // StoreInputMap read the path file and store the data in an structure
-func StoreInputMap(path string) *DataMap {
+func storeInputMap(path string) *models.DataMap {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
@@ -17,7 +19,7 @@ func StoreInputMap(path string) *DataMap {
 
 	scanner := bufio.NewScanner(file)
 
-	mapData := DataMap{}
+	mapData := models.DataMap{}
 	m := mapData.New()
 	y, x := 0, 0
 	for scanner.Scan() {
@@ -25,10 +27,10 @@ func StoreInputMap(path string) *DataMap {
 		m.AllocNewY(y)
 		strings.Map(func(r rune) rune {
 			m.SetData(y, x, r)
-			if r == StarKey {
+			if r == models.StarKey {
 				m.SetStart(y, x)
 			}
-			if r == EndKey {
+			if r == models.EndKey {
 				m.SetEnd(y, x)
 			}
 			x++

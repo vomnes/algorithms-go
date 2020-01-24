@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
-
-	"./algorithms"
+	_map "./manage_map"
 	"./models"
 )
 
@@ -122,11 +120,11 @@ func fillGraph() *models.ItemGraph {
 }
 
 func main() {
-	graph := fillGraph()
-	algorithms.BFS(graph)
-	fmt.Println("----")
-	algorithms.DFS(graph)
+	// graph := fillGraph()
+	// algorithms.BFS(graph)
+	// fmt.Println("----")
+	// algorithms.DFS(graph)
 	// algorithms.AStar(graph)
 
-	// _map.Exec()
+	_map.Exec()
 }

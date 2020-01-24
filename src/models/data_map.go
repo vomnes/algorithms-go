@@ -1,4 +1,4 @@
-package manageMap
+package models
 
 import "sync"
 
@@ -64,4 +64,9 @@ func (s *DataMap) SetEnd(y, x int) {
 		x: x,
 	}
 	s.lock.Unlock()
+}
+
+// GetData return the rune value of the data at the y, x coordinates
+func (s *DataMap) GetData(y, x int) rune {
+	return s.data[y][x]
 }
