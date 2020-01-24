@@ -1,4 +1,4 @@
-# graph-algorithms-go
+# Graph Algorithms
 Graph algorithms implementation in Golang
 
 ## Breadth-first Search
@@ -40,13 +40,13 @@ Depth-first search (DFS) is an algorithm for traversing or searching tree or gra
 ## A* Search Algorithm
 A* (pronounced "A-star") is a graph traversal and path search algorithm, which is often used in computer science due to its completeness, optimality, and optimal efficiency. In practical travel-routing systems, it is generally outperformed by algorithms which can pre-process the graph to attain better performance, as well as memory-bounded approaches; however, A* is still the best solution in many cases.
 
-At each iteration of its main loop, **A* needs to determine which of its paths to extend**. It does so based **on the cost of the path and an estimate of the cost required to extend the path all the way to the goal**.  
+At each iteration of its main loop, **A Star needs to determine which of its paths to extend**. It does so based **on the cost of the path and an estimate of the cost required to extend the path all the way to the goal**.  
 Specifically, A* selects the path that minimizes :  
 
 > f(n) = g(n) + h(n)
-> g(n) is the cost of the path from the start node to n
-> h(n) is a heuristic function that estimates the cost of the cheapest path from n to the goal for example using a Euclidean distance formula
 
+*g(n)* is the cost of the path from the start node to n
+*h(n)* is a heuristic function that estimates the cost of the cheapest path from n to the goal for example using a [Euclidean distance formula](https://en.wikipedia.org/wiki/Euclidean_distance)
 (_Source Wikipedia_)
 
 ### Pseudocode
