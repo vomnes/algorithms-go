@@ -26,8 +26,8 @@ func storeInputMap(path string) *models.DataMap {
 		x = 0
 		m.AllocNewY(y)
 		strings.Map(func(r rune) rune {
-			m.SetData(y, x, r)
-			if r == models.StarKey {
+			m.SetDataChar(y, x, r)
+			if r == models.StartKey {
 				m.SetStart(y, x)
 			}
 			if r == models.EndKey {
