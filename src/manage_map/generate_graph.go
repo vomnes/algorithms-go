@@ -17,8 +17,7 @@ func checkEdges(m *models.DataMap, prevPos, pos models.Coords) []models.Coords {
 	var value models.Link
 	for _, checkedPos := range posList {
 		value = m.GetData(checkedPos)
-		// fmt.Println(value, string(value))
-		if (checkedPos.Y == prevPos.Y && checkedPos.X == prevPos.X) || value.Visited {
+		if checkedPos.Y == prevPos.Y && checkedPos.X == prevPos.X {
 			continue
 		}
 		if value.Char == models.PathKey || value.Char == models.StartKey {
@@ -27,74 +26,64 @@ func checkEdges(m *models.DataMap, prevPos, pos models.Coords) []models.Coords {
 			edges = append(edges, checkedPos)
 		}
 	}
-	// fmt.Println("#>", edges, prevPos, pos)
 	return edges
 }
 
-// func lenNewEdges(m *models.DataMap, prevPos models.Coords, egdes []models.Coords) int {
-// 	count := 0
-// 	for _, edge range edges {
-// 			if edge.Y != prevPos.Y && edge.X != prevPos.X {
-// 				count++
-// 			}
-// 	}
-// }
-
 // GenerateGraph is the function that will grenerate our graph using map data
 func GenerateGraph(dataMap *models.DataMap) {
-	var currentPos, childPos, prevChildPos models.Coords
-	var tmpChildPosEdges []models.Coords
+	var childPos, prevChildPos models.Coords
+	var tmpChildPosEdges, nodePosEdges []models.Coords
 	graph := models.ItemGraph{}
 	g := graph.String()
 	pos := dataMap.GetStart()
 	// Init queue
-	queue := models.NodeQueue{}
-	q := queue.New()
-	q.Enqueue(models.Node{Value: pos})
+	q := models.NodeQueue{}
+	queue := q.New()
+	queue.Enqueue(models.Node{Value: *pos})
 	// Init graph
-	// countEdges := -1
-	for {
-		if q.IsEmpty() {
-			break
-		}
-		currentPos = *q.Front().Value.(*models.Coords)
-		// pretty.Print("@@@>", q)
-		fmt.Println("&", currentPos)
-		currentPosEdges := checkEdges(dataMap, models.Coords{Y: -1, X: -1}, currentPos)
-		dataMap.AddEdges(currentPos, currentPosEdges)
-		fmt.Println("zzzz>", currentPos, currentPosEdges)
-		dataMap.PrintMap(currentPos)
-		for _, edge := range currentPosEdges {
-			prevChildPos = currentPos
+	for !queue.IsEmpty() {
+		nodePos := queue.Front().Value.(models.Coords)
+		nodePosEdges = checkEdges(dataMap, models.Coords{Y: -1, X: -1}, nodePos)
+		dataMap.AddEdges(nodePos, nodePosEdges)
+		// fmt.Printf("Node: %v <-> %v\n", nodePos, nodePosEdges)
+		// dataMap.PrintMap(nodePos)
+		for _, edge := range nodePosEdges {
+			if dataMap.GetData(edge).Visited {
+				// pretty.Println("Already visited:", edge)
+				continue
+			}
+			prevChildPos = nodePos
 			childPos = edge
-			tmpChildPosEdges = checkEdges(dataMap, currentPos, edge)
-			fmt.Println("Here:", tmpChildPosEdges, len(tmpChildPosEdges))
+			tmpChildPosEdges = checkEdges(dataMap, nodePos, edge)
+			// fmt.Println("Edge:", edge)
+			// dataMap.PrintMap(edge)
 			for {
-				dataMap.PrintMap(childPos)
 				if len(tmpChildPosEdges) > 1 {
 					if len(dataMap.GetEdges(childPos)) == 0 {
-						dataMap.AddEdges(childPos, tmpChildPosEdges)
-						q.Enqueue(models.Node{Value: &childPos})
+						queue.Enqueue(models.Node{Value: childPos})
 					} else {
-						fmt.Println("b")
 						if !dataMap.EdgesAllVisited(childPos) {
-							fmt.Println("c")
+							// log.Fatal()
 						}
 					}
 					break
 				} else if len(tmpChildPosEdges) == 0 {
+					// End branch
+					dataMap.SetDataVisited(childPos, true)
+					break
+				}
+				// Start node reached
+				if models.CompareCoords(childPos, *dataMap.GetStart()) {
 					break
 				}
 				dataMap.SetDataVisited(childPos, true)
 				prevChildPos = childPos
 				childPos = tmpChildPosEdges[0]
 				tmpChildPosEdges = checkEdges(dataMap, prevChildPos, childPos)
-				// fmt.Println("---->", tmpChildPosEdges)
 			}
 		}
-		q.Dequeue()
+		queue.Dequeue()
 	}
-	// checkEdges(dataMap, pos.Y, pos.X)
-
+	dataMap.PrintMap()
 	fmt.Print(g)
 }

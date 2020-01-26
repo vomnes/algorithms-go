@@ -165,7 +165,6 @@ func (s *DataMap) GetEnd() Coords {
 
 // CompareCoords return true if a and b coords are the same
 func CompareCoords(a, b Coords) bool {
-	fmt.Println(a, b)
 	return a.Y == b.Y && a.X == b.X
 }
 
@@ -187,9 +186,9 @@ func (s *DataMap) PrintMap(pos ...Coords) {
 				}
 			}
 			if s.data[y][x].Visited {
-				fmt.Print("$")
+				fmt.Print("-")
 			} else if len(s.data[y][x].ChildEdges) > 0 {
-				fmt.Print("*")
+				fmt.Print("+")
 			} else {
 				fmt.Print(string(s.data[y][x].Char))
 			}
