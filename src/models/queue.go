@@ -1,6 +1,10 @@
 package models
 
-import "sync"
+import (
+	"sync"
+
+	"github.com/kr/pretty"
+)
 
 // NodeQueue the queue of Nodes
 type NodeQueue struct {
@@ -52,4 +56,9 @@ func (s *NodeQueue) Size() int {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	return len(s.items)
+}
+
+// Print write on the standard ouput the items
+func (s *NodeQueue) Print() {
+	pretty.Print(s.items)
 }

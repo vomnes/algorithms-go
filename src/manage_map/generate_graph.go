@@ -2,7 +2,6 @@ package manageMap
 
 import (
 	"fmt"
-	"log"
 
 	"../models"
 )
@@ -15,16 +14,16 @@ func checkEdges(m *models.DataMap, prevPos, pos models.Coords) []models.Coords {
 		models.Coords{Y: pos.Y, X: pos.X - 1},
 		models.Coords{Y: pos.Y, X: pos.X + 1},
 	}
-	var value rune
+	var value models.Link
 	for _, checkedPos := range posList {
-		value = m.GetDataChar(checkedPos.Y, checkedPos.X)
+		value = m.GetData(checkedPos)
 		// fmt.Println(value, string(value))
-		if checkedPos.Y == prevPos.Y && checkedPos.X == prevPos.X {
+		if (checkedPos.Y == prevPos.Y && checkedPos.X == prevPos.X) || value.Visited {
 			continue
 		}
-		if value == models.PathKey || value == models.StartKey {
+		if value.Char == models.PathKey || value.Char == models.StartKey {
 			edges = append(edges, checkedPos)
-		} else if value == models.EndKey {
+		} else if value.Char == models.EndKey {
 			edges = append(edges, checkedPos)
 		}
 	}
@@ -55,26 +54,38 @@ func GenerateGraph(dataMap *models.DataMap) {
 	// Init graph
 	// countEdges := -1
 	for {
+		if q.IsEmpty() {
+			break
+		}
 		currentPos = *q.Front().Value.(*models.Coords)
+		// pretty.Print("@@@>", q)
+		fmt.Println("&", currentPos)
 		currentPosEdges := checkEdges(dataMap, models.Coords{Y: -1, X: -1}, currentPos)
 		dataMap.AddEdges(currentPos, currentPosEdges)
+		fmt.Println("zzzz>", currentPos, currentPosEdges)
+		dataMap.PrintMap(currentPos)
 		for _, edge := range currentPosEdges {
 			prevChildPos = currentPos
 			childPos = edge
 			tmpChildPosEdges = checkEdges(dataMap, currentPos, edge)
-			// fmt.Println("-->", tmpChildPosEdges)
+			fmt.Println("Here:", tmpChildPosEdges, len(tmpChildPosEdges))
 			for {
+				dataMap.PrintMap(childPos)
 				if len(tmpChildPosEdges) > 1 {
-					fmt.Println("@@@>", tmpChildPosEdges)
-					log.Fatal()
 					if len(dataMap.GetEdges(childPos)) == 0 {
 						dataMap.AddEdges(childPos, tmpChildPosEdges)
+						q.Enqueue(models.Node{Value: &childPos})
 					} else {
+						fmt.Println("b")
 						if !dataMap.EdgesAllVisited(childPos) {
-							q.Enqueue(models.Node{Value: childPos})
+							fmt.Println("c")
 						}
 					}
+					break
+				} else if len(tmpChildPosEdges) == 0 {
+					break
 				}
+				dataMap.SetDataVisited(childPos, true)
 				prevChildPos = childPos
 				childPos = tmpChildPosEdges[0]
 				tmpChildPosEdges = checkEdges(dataMap, prevChildPos, childPos)
