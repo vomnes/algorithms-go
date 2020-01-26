@@ -55,6 +55,27 @@ func (g *ItemGraph) AddEdge(n1, n2 *Node, weight ...int) {
 	g.lock.Unlock()
 }
 
+// HandleNewEdge creates a new link between two nodes
+// creates the nodes if necessary
+func (g *ItemGraph) HandleNewEdge(n1, n2 *Node) {
+	n1Exists, n2Exists := false, false
+	for _, node := range g.nodes {
+		if n1.Value == node.Value {
+			n1Exists = true
+		}
+		if n2.Value == node.Value {
+			n2Exists = true
+		}
+	}
+	if !n1Exists {
+		g.AddNode(n1)
+	}
+	if !n2Exists {
+		g.AddNode(n2)
+	}
+	g.AddEdge(n1, n2)
+}
+
 // String return the graph links under string format
 func (g *ItemGraph) String() string {
 	g.lock.RLock()

@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 const (
@@ -170,6 +171,7 @@ func CompareCoords(a, b Coords) bool {
 
 // PrintMap ...
 func (s *DataMap) PrintMap(pos ...Coords) {
+	fmt.Print("\033[H\033[2J")
 	hasPos := false
 	if len(pos) > 0 {
 		hasPos = true
@@ -197,4 +199,6 @@ func (s *DataMap) PrintMap(pos ...Coords) {
 		fmt.Print("\n")
 		y++
 	}
+	fmt.Println("=====================")
+	time.Sleep(500 * time.Millisecond)
 }

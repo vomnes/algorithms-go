@@ -62,3 +62,13 @@ func (s *NodeQueue) Size() int {
 func (s *NodeQueue) Print() {
 	pretty.Print(s.items)
 }
+
+// IsIn ...
+func (s *NodeQueue) IsIn(t Node) bool {
+	for _, node := range s.items {
+		if node.Value == t.Value {
+			return true
+		}
+	}
+	return false
+}
