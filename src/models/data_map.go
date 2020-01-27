@@ -182,7 +182,7 @@ func (s *DataMap) PrintMap(pos ...Coords) {
 		for s.data[y][x].Char != 0 {
 			if hasPos {
 				if y == pos[0].Y && x == pos[0].X {
-					fmt.Print("z")
+					fmt.Print("x")
 					x++
 					continue
 				}
@@ -200,5 +200,5 @@ func (s *DataMap) PrintMap(pos ...Coords) {
 		y++
 	}
 	fmt.Println("=====================")
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(150 * time.Millisecond)
 }

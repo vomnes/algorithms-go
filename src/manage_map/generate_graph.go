@@ -27,6 +27,9 @@ func checkEdges(m *models.DataMap, prevPos, pos models.Coords) []models.Coords {
 	return edges
 }
 
+//======
+// /!\ Probleme duplicate nodes edges to fix
+
 // GenerateGraph is the function that will grenerate our graph using map data
 func GenerateGraph(dataMap *models.DataMap) *models.ItemGraph {
 	var childPos, prevChildPos models.Coords
@@ -65,7 +68,7 @@ func GenerateGraph(dataMap *models.DataMap) *models.ItemGraph {
 						}
 					} else {
 						if !dataMap.EdgesAllVisited(childPos) {
-							// log.Fatal()
+							// log.Fatal(100)
 						}
 					}
 					break
