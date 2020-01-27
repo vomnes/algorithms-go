@@ -9,19 +9,19 @@ Manage map contains a program that read a file map that represent a maze to crea
 - _'E'_ is the ending point
 
 ### Map example
->#####.##
->#.......
->#.#.###.
->#.#.#S..
->#.#.####
->#.......
->####.##.
->......#.
->.####.#.
->E#......
+>#####.##  
+>#.......  
+>#.#.###.  
+>#.#.#S..  
+>#.#.####  
+>#.......  
+>####.##.  
+>......#.  
+>.####.#.  
+>E#......  
 
 ### Exploration map
-The map exploration is type BFS.
+The map exploration is type BFS.  
 <img alt="program running" src="./img/ExploreMaze.gif" title="program-running">
 
 ## Breadth-first Search
