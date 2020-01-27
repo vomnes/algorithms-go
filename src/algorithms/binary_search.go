@@ -1,7 +1,7 @@
 package algorithms
 
 // IterativeSearch is an iteration search function
-// O()
+// O(n)
 func IterativeSearch(data []int, length, toFind int) bool {
 	for index := 0; index < length; index++ {
 		if data[index] == toFind {
