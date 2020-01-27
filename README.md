@@ -1,6 +1,29 @@
 # Graph Algorithms
 Graph algorithms implementation in Golang
 
+## Manage Map
+Manage map contains a program that read a file map that represent a maze to create a graph :  
+- _'.'_ is a path
+- _'#'_ is a wall
+- _'S'_ is the starting point
+- _'E'_ is the ending point
+
+### Exploration map
+The map exploration is type BFS.
+```
+#####.##
+#.......
+#.#.###.
+#.#.#S..
+#.#.####
+#.......
+####.##.
+......#.
+.####.#.
+E#......
+```
+<img alt="program running" src="./img/ExploreMaze.gif" title="program-running">
+
 ## Breadth-first Search
 Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root, and explores all of **the neighbor nodes** at the present depth **prior to moving on to the nodes at the next depth level**. (_Source Wikipedia_)
 
