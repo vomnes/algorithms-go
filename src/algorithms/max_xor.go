@@ -111,3 +111,18 @@ func MaxXor(arr, queries []int32) []int32 {
 	}
 	return result
 }
+
+func maxXorIterative(arr []int32, queries []int32) []int32 {
+	var result []int32
+	var tmpResult int32
+	for _, query := range queries {
+		tmpResult = 0
+		for _, elem := range arr {
+			if query^elem > tmpResult {
+				tmpResult = query ^ elem
+			}
+		}
+		result = append(result, tmpResult)
+	}
+	return result
+}
