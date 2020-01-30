@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"./algorithms"
 	"./models"
 )
@@ -127,5 +129,10 @@ func main() {
 	// algorithms.AStar(graph)
 	// _map.Exec()
 
-	algorithms.TrieExec()
+	fmt.Println(
+		algorithms.MaxXor(
+			[]int32{1, 3, 5, 7},
+			[]int32{17, 6},
+		),
+	)
 }
