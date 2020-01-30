@@ -1,6 +1,9 @@
 # Graph Algorithms
 Graph algorithms implementation in Golang
 
+## Maximum Xor - Trie Data Structure
+<img alt="Maximum Xor" src="./img/MaxXor.jpg" title="maximum-xor">
+
 ## Manage Map
 Manage map contains a program that read a file map that represent a maze to create a graph :  
 - _'.'_ is a path

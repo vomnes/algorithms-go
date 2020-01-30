@@ -131,7 +131,7 @@ func main() {
 
 	fmt.Println(
 		algorithms.MaxXor(
-			[]int32{1, 3, 5, 7},
+			[]int32{1, 3, 5, 2},
 			[]int32{17, 6},
 		),
 	)
