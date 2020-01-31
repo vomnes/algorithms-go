@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"./algorithms"
+	"./algorithms/sort"
 	"./models"
 )
 
@@ -129,10 +129,14 @@ func main() {
 	// algorithms.AStar(graph)
 	// _map.Exec()
 
-	fmt.Println(
-		algorithms.MaxXor(
-			[]int32{1, 3, 5, 2},
-			[]int32{17, 6},
-		),
-	)
+	fmt.Println(sort.BubbleSort(
+		[]int{
+			5,
+			7,
+			9,
+			2,
+			100,
+			24,
+		},
+	))
 }
