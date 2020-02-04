@@ -1,9 +1,6 @@
 package main
 
 import (
-	"fmt"
-
-	"./algorithms/sort"
 	"./models"
 )
 
@@ -129,14 +126,5 @@ func main() {
 	// algorithms.AStar(graph)
 	// _map.Exec()
 
-	fmt.Println(sort.BubbleSort(
-		[]int{
-			5,
-			7,
-			9,
-			2,
-			100,
-			24,
-		},
-	))
+	models.ExecHeap()
 }
