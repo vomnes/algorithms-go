@@ -10,7 +10,7 @@ import (
 type Heap struct {
 	array           []int
 	count, capacity int
-	kind            heapType
+	cmpFunc         func(int, int) bool
 }
 
 type heapType int
@@ -26,7 +26,11 @@ func (h *Heap) new(capacity int, kind heapType) *Heap {
 	h.array = make([]int, capacity)
 	h.capacity = capacity
 	h.count = 0
-	h.kind = kind
+	if kind == HeapMin {
+		h.cmpFunc = minOrder
+	} else if kind == HeapMax {
+		h.cmpFunc = maxOrder
+	}
 	return h
 }
 
@@ -35,11 +39,7 @@ func (h *Heap) insert(value int) {
 		return
 	}
 	h.array[h.count] = value
-	if h.kind == HeapMin {
-		h.heapify(h.count, minOrder)
-	} else if h.kind == HeapMax {
-		h.heapify(h.count, maxOrder)
-	}
+	h.heapify(h.count, h.cmpFunc)
 	h.count++
 }
 
@@ -59,33 +59,55 @@ func (h *Heap) heapify(nodeIndex int, cmp func(int, int) bool) {
 	}
 }
 
-// func (h *Heap) down(nodeIndex int) {
-// 	leftChild := nodeIndex * 2
-// 	rightChild := nodeIndex*2 + 1
-// 	// Stop if no childs (if no left child then no right child)
-// 	if leftChild > h.count || rightChild > h.count {
-// 		return
-// 	}
-//
-// 	if h.array[leftChild] > h.array[rightChild] {
-// 		utils.SwapInt(&h.array[leftChild], &h.array[nodeIndex])
-// 		h.down(leftChild)
-// 	} else {
-// 		utils.SwapInt(&h.array[rightChild], &h.array[nodeIndex])
-// 		h.down(rightChild)
-// 	}
-// }
+func (h *Heap) pop() {
+	h.capacity--
+	h.array = h.array[:h.capacity]
+	h.count--
+}
+
+func (h *Heap) delete(nodeIndex int) {
+	lastNodeIndex := h.count - 1
+	if lastNodeIndex != nodeIndex {
+		utils.SwapInt(&h.array[lastNodeIndex], &h.array[nodeIndex])
+		h.down(0)
+	}
+	h.pop()
+}
+
+func (h *Heap) down(nodeIndex int) {
+	leftChild := nodeIndex * 2
+	rightChild := nodeIndex*2 + 1
+	extremity := nodeIndex
+	// Stop if no childs (if no left child then no right child)
+	if leftChild > h.count || leftChild < 0 {
+		return
+	}
+	if h.cmpFunc(h.array[leftChild], h.array[nodeIndex]) {
+		extremity = leftChild
+	}
+	if rightChild <= h.count && rightChild >= 0 &&
+		h.cmpFunc(h.array[rightChild], h.array[nodeIndex]) {
+		extremity = rightChild
+	}
+	if extremity != nodeIndex {
+		utils.SwapInt(&h.array[extremity], &h.array[nodeIndex])
+		h.down(extremity)
+	}
+	return
+}
 
 // ExecHeap exec
 func ExecHeap() {
 	data := []int{5, 3, 17, 10, 84, 19, 6, 22, 9}
 	len := len(data)
 	heap := Heap{}
-	h := heap.new(len, HeapMin)
-	fmt.Println(h)
+	h := heap.new(len, HeapMax)
 	for _, e := range data {
 		h.insert(e)
 	}
 	fmt.Println(h)
-
+	h.delete(0)
+	h.delete(0)
+	h.delete(0)
+	fmt.Println(h)
 }
