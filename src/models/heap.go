@@ -36,51 +36,56 @@ func (h *Heap) insert(value int) {
 	}
 	h.array[h.count] = value
 	if h.kind == HeapMin {
-		h.heapifyMin(h.count)
+		h.heapify(h.count, minOrder)
 	} else if h.kind == HeapMax {
-		// WORK IN PROGRESS
-		for i := 0; i < h.count; i++ {
-			fmt.Print(i)
-			h.heapifyMax(i)
-		}
-		fmt.Print("\n")
+		h.heapify(h.count, maxOrder)
 	}
 	h.count++
 }
 
-func (h *Heap) heapifyMin(nodeIndex int) {
+func minOrder(a, b int) bool {
+	return a < b
+}
+
+func maxOrder(a, b int) bool {
+	return a > b
+}
+
+func (h *Heap) heapify(nodeIndex int, cmp func(int, int) bool) {
 	parentNodeIndex := (nodeIndex - 1) / 2
-	if h.array[nodeIndex] < h.array[parentNodeIndex] {
+	if cmp(h.array[nodeIndex], h.array[parentNodeIndex]) {
 		utils.SwapInt(&h.array[nodeIndex], &h.array[parentNodeIndex])
-		h.heapifyMin(parentNodeIndex)
+		h.heapify(parentNodeIndex, cmp)
 	}
 }
 
-func (h *Heap) heapifyMax(nodeIndex int) {
-	left := nodeIndex*2 + 1
-	right := nodeIndex*2 + 2
-	largest := nodeIndex
-
-	if left <= h.count && h.array[left] > h.array[largest] {
-		largest = left
-	}
-	if right <= h.count && h.array[right] > h.array[largest] {
-		largest = right
-	}
-	if largest != nodeIndex {
-		utils.SwapInt(&h.array[nodeIndex], &h.array[largest])
-		h.heapifyMax(largest)
-	}
-}
+// func (h *Heap) down(nodeIndex int) {
+// 	leftChild := nodeIndex * 2
+// 	rightChild := nodeIndex*2 + 1
+// 	// Stop if no childs (if no left child then no right child)
+// 	if leftChild > h.count || rightChild > h.count {
+// 		return
+// 	}
+//
+// 	if h.array[leftChild] > h.array[rightChild] {
+// 		utils.SwapInt(&h.array[leftChild], &h.array[nodeIndex])
+// 		h.down(leftChild)
+// 	} else {
+// 		utils.SwapInt(&h.array[rightChild], &h.array[nodeIndex])
+// 		h.down(rightChild)
+// 	}
+// }
 
 // ExecHeap exec
 func ExecHeap() {
-	data := []int{19, 2, 17, 36, 1, 7, 3, 100, 25}
+	data := []int{5, 3, 17, 10, 84, 19, 6, 22, 9}
 	len := len(data)
 	heap := Heap{}
-	h := heap.new(len, HeapMax)
+	h := heap.new(len, HeapMin)
+	fmt.Println(h)
 	for _, e := range data {
 		h.insert(e)
 	}
 	fmt.Println(h)
+
 }
