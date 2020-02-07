@@ -1,7 +1,7 @@
 # Algorithms
 Algorithms implementation in Golang
 
-### Data Structure
+### Data Structures
 - Queue
 - Stack
 - Heap
