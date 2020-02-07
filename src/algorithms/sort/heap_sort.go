@@ -11,7 +11,7 @@ func HeapSort(arr []int) []int {
 	}
 	len := len(arr)
 	heap := models.Heap{}
-	h := heap.New(len, models.HeapMax)
+	h := heap.New(len, models.HeapMin)
 	for _, e := range arr {
 		h.Insert(e)
 	}

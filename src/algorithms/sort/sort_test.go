@@ -3,6 +3,7 @@ package sort
 import (
 	"fmt"
 	"math"
+	"sort"
 	"testing"
 	"time"
 
@@ -11,7 +12,7 @@ import (
 
 func TestBubbleSort(t *testing.T) {
 	data := []int{5, 3, 17, 10, 84, 19, 6, 22, 9}
-	sorted := []int{84, 22, 19, 17, 10, 9, 6, 5, 3}
+	sorted := []int{3, 5, 6, 9, 10, 17, 19, 22, 84}
 	result := BubbleSort(data)
 	if utils.ArrayIntEquals(sorted, result) == false {
 		t.Errorf("Expected %v has %v", sorted, result)
@@ -20,11 +21,16 @@ func TestBubbleSort(t *testing.T) {
 
 func TestHeapSort(t *testing.T) {
 	data := []int{5, 3, 17, 10, 84, 19, 6, 22, 9}
-	sorted := []int{84, 22, 19, 17, 10, 9, 6, 5, 3}
+	sorted := []int{3, 5, 6, 9, 10, 17, 19, 22, 84}
 	result := HeapSort(data)
 	if utils.ArrayIntEquals(sorted, result) == false {
 		t.Errorf("Expected %v has %v", sorted, result)
 	}
+}
+
+func StdSort(arr []int) []int {
+	sort.Ints(arr)
+	return arr
 }
 
 func BenchmarkSortFuncs(b *testing.B) {
@@ -34,13 +40,14 @@ func BenchmarkSortFuncs(b *testing.B) {
 	}{
 		{"BubbleSort", BubbleSort},
 		{"HeapSort", HeapSort},
+		{"StdSort", StdSort},
 	}
 	for _, item := range list {
-		for k := 0.; k < 10; k++ {
-			n := int(math.Pow(4, k))
+		for k := 0.; k < 6; k++ {
+			n := int(math.Pow(10, k))
 
 			var data []int
-			for i := 1; i < n; i++ {
+			for i := n; i > 0; i-- {
 				data = append(data, i)
 			}
 
