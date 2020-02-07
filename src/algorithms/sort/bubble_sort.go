@@ -12,7 +12,7 @@ func BubbleSort(arr []int) []int {
 	for swapped {
 		swapped = false
 		for index := 0; index < len-1; index++ {
-			if arr[index] > arr[index+1] {
+			if arr[index] < arr[index+1] {
 				utils.SwapInt(&arr[index], &arr[index+1])
 				swapped = true
 			}
