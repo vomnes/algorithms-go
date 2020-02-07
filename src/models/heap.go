@@ -71,14 +71,17 @@ func (h *Heap) pop() {
 	h.count--
 }
 
-// DeleteRoot remove the root by swaping the first and last item
-func (h *Heap) DeleteRoot() int {
-	root := h.array[0]
+// Delete remove the root by swaping the first and last item
+func (h *Heap) Delete(nodeIndex int) int {
+	if nodeIndex >= h.count || nodeIndex < 0 {
+		return -1
+	}
+	removedValue := h.array[nodeIndex]
 	lastNodeIndex := h.count - 1
-	utils.SwapInt(&h.array[lastNodeIndex], &h.array[0])
+	utils.SwapInt(&h.array[lastNodeIndex], &h.array[nodeIndex])
 	h.pop()
 	h.down(0)
-	return root
+	return removedValue
 }
 
 func (h *Heap) down(nodeIndex int) {

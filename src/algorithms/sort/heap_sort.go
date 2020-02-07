@@ -18,7 +18,7 @@ func HeapSort(arr []int) []int {
 	sortedArray := make([]int, h.GetCapacity())
 	index := 0
 	for {
-		sortedArray[index] = h.DeleteRoot()
+		sortedArray[index] = h.Delete(0)
 		if h.IsEmpty() {
 			break
 		}

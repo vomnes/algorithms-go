@@ -2,7 +2,9 @@ package sort
 
 import (
 	"fmt"
+	"math"
 	"testing"
+	"time"
 
 	"../../utils"
 )
@@ -25,7 +27,7 @@ func TestHeapSort(t *testing.T) {
 	}
 }
 
-func BenchmarkSearchFuncs(b *testing.B) {
+func BenchmarkSortFuncs(b *testing.B) {
 	list := []struct {
 		name string
 		fun  func(arr []int) []int
@@ -34,14 +36,18 @@ func BenchmarkSearchFuncs(b *testing.B) {
 		{"HeapSort", HeapSort},
 	}
 	for _, item := range list {
-		for k := 0; k < 32000; k += 1000 {
+		for k := 0.; k < 10; k++ {
+			n := int(math.Pow(4, k))
+
 			var data []int
-			for i := 1; i < k; i++ {
+			for i := 1; i < n; i++ {
 				data = append(data, i)
 			}
-			b.Run(fmt.Sprintf("%s/%d", item.name, k), func(b *testing.B) {
-				item.fun(data)
-			})
+
+			now := time.Now()
+			item.fun(data)
+			done := time.Now().Sub(now)
+			fmt.Printf("%-10s %-10d %f seconds\n", item.name, n, done.Seconds())
 		}
 	}
 }
