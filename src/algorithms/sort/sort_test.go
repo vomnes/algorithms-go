@@ -54,7 +54,7 @@ func BenchmarkSortFuncs(b *testing.B) {
 			now := time.Now()
 			item.fun(data)
 			done := time.Now().Sub(now)
-			fmt.Printf("%-10s %-10d %f seconds\n", item.name, n, done.Seconds())
+			fmt.Printf("%s	%d	%f\n", item.name, n, done.Seconds())
 		}
 	}
 }
