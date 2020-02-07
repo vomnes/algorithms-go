@@ -1,8 +1,6 @@
 package models
 
 import (
-	"fmt"
-
 	"../utils"
 )
 
@@ -13,6 +11,12 @@ type Heap struct {
 	cmpFunc         func(int, int) bool
 }
 
+// IsEmpty return true if the heap is empty
+func (h *Heap) IsEmpty() bool { return h.count == 0 }
+
+// GetCapacity return the capacity value of the heap
+func (h *Heap) GetCapacity() int { return h.capacity }
+
 type heapType int
 
 const (
@@ -22,7 +26,8 @@ const (
 	HeapMax heapType = 1
 )
 
-func (h *Heap) new(capacity int, kind heapType) *Heap {
+// New creates a new heap structure
+func (h *Heap) New(capacity int, kind heapType) *Heap {
 	h.array = make([]int, capacity)
 	h.capacity = capacity
 	h.count = 0
@@ -34,7 +39,8 @@ func (h *Heap) new(capacity int, kind heapType) *Heap {
 	return h
 }
 
-func (h *Heap) insert(value int) {
+// Insert add a new value in the heap
+func (h *Heap) Insert(value int) {
 	if h.count >= h.capacity {
 		return
 	}
@@ -65,49 +71,34 @@ func (h *Heap) pop() {
 	h.count--
 }
 
-func (h *Heap) delete(nodeIndex int) {
+// DeleteRoot remove the root by swaping the first and last item
+func (h *Heap) DeleteRoot() int {
+	root := h.array[0]
 	lastNodeIndex := h.count - 1
-	if lastNodeIndex != nodeIndex {
-		utils.SwapInt(&h.array[lastNodeIndex], &h.array[nodeIndex])
-		h.down(0)
-	}
+	utils.SwapInt(&h.array[lastNodeIndex], &h.array[0])
 	h.pop()
+	h.down(0)
+	return root
 }
 
 func (h *Heap) down(nodeIndex int) {
-	leftChild := nodeIndex * 2
-	rightChild := nodeIndex*2 + 1
+	leftChild := nodeIndex*2 + 1
+	rightChild := nodeIndex*2 + 2
 	extremity := nodeIndex
 	// Stop if no childs (if no left child then no right child)
-	if leftChild > h.count || leftChild < 0 {
+	if leftChild > h.count-1 || leftChild < 0 {
 		return
 	}
 	if h.cmpFunc(h.array[leftChild], h.array[nodeIndex]) {
 		extremity = leftChild
 	}
-	if rightChild <= h.count && rightChild >= 0 &&
-		h.cmpFunc(h.array[rightChild], h.array[nodeIndex]) {
+	if rightChild <= h.count-1 && rightChild >= 0 &&
+		h.cmpFunc(h.array[rightChild], h.array[extremity]) {
 		extremity = rightChild
 	}
 	if extremity != nodeIndex {
 		utils.SwapInt(&h.array[extremity], &h.array[nodeIndex])
 		h.down(extremity)
 	}
-	return
-}
-
-// ExecHeap exec
-func ExecHeap() {
-	data := []int{5, 3, 17, 10, 84, 19, 6, 22, 9}
-	len := len(data)
-	heap := Heap{}
-	h := heap.new(len, HeapMax)
-	for _, e := range data {
-		h.insert(e)
-	}
-	fmt.Println(h)
-	h.delete(0)
-	h.delete(0)
-	h.delete(0)
-	fmt.Println(h)
+	// fmt.Printf("Parent: %d, Left: %d, Right: %d\n", h.array[nodeIndex], h.array[leftChild], h.array[rightChild])
 }
