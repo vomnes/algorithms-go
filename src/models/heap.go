@@ -76,10 +76,14 @@ func (h *Heap) Delete(nodeIndex int) int {
 	if nodeIndex >= h.count || nodeIndex < 0 {
 		return -1
 	}
+	// Store removed value
 	removedValue := h.array[nodeIndex]
 	lastNodeIndex := h.count - 1
+	// Swap the root and the last node
 	utils.SwapInt(&h.array[lastNodeIndex], &h.array[nodeIndex])
+	// Remove the root value now corresponding at the last nodes
 	h.pop()
+	// Heapify the heap with it's new state
 	h.down(0)
 	return removedValue
 }
@@ -103,5 +107,4 @@ func (h *Heap) down(nodeIndex int) {
 		utils.SwapInt(&h.array[extremity], &h.array[nodeIndex])
 		h.down(extremity)
 	}
-	// fmt.Printf("Parent: %d, Left: %d, Right: %d\n", h.array[nodeIndex], h.array[leftChild], h.array[rightChild])
 }
