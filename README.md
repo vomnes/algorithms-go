@@ -1,5 +1,20 @@
-# Graph Algorithms
-Graph algorithms implementation in Golang
+# Algorithms
+Algorithms implementation in Golang
+
+### Data Structure
+- Queue
+- Stack
+- Heap
+
+### Algorithms
+- BFS
+- DBS
+- A*
+- Trie
+- Max XOR
+- Binary Search
+- Bubble Sort
+- Heap Sort
 
 ## Maximum Xor - Trie Data Structure
 <img alt="Maximum Xor" src="./img/MaxXor.jpg" title="maximum-xor">
