@@ -28,5 +28,6 @@ func HeapSort(arr []int) []int {
 		}
 		index++
 	}
+	h = nil
 	return sortedArray
 }

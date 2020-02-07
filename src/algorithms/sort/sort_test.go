@@ -28,6 +28,15 @@ func TestHeapSort(t *testing.T) {
 	}
 }
 
+func TestQuicksort(t *testing.T) {
+	data := []int{5, 3, 17, 10, 84, 19, 6, 22, 9}
+	sorted := []int{3, 5, 6, 9, 10, 17, 19, 22, 84}
+	result := Quicksort(data)
+	if utils.ArrayIntEquals(sorted, result) == false {
+		t.Errorf("Expected %v has %v", sorted, result)
+	}
+}
+
 func StdSort(arr []int) []int {
 	sort.Ints(arr)
 	return arr
@@ -40,6 +49,7 @@ func BenchmarkSortFuncs(b *testing.B) {
 	}{
 		{"BubbleSort", BubbleSort},
 		{"HeapSort", HeapSort},
+		{"Quicksort", Quicksort},
 		{"StdSort", StdSort},
 	}
 	for _, item := range list {
