@@ -5,12 +5,12 @@ Algorithms implementation in Golang
 - Queue
 - Stack
 - Heap
+- Trie
 
 ### Algorithms
 - BFS
 - DBS
 - A*
-- Trie
 - Max XOR
 - Binary Search
 - Bubble Sort
