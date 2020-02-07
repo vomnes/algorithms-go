@@ -15,6 +15,7 @@ Algorithms implementation in Golang
 - Binary Search
 - Bubble Sort
 - Heap Sort
+- Quicksort
 
 ## Sort Benchmark
 <img alt="Sort benchmark" src="./img/SortBenchmark.png" title="sort-benchmark" width="75%">
