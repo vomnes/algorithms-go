@@ -83,7 +83,7 @@ func (h *Heap) Delete(nodeIndex int) int {
 	utils.SwapInt(&h.array[lastNodeIndex], &h.array[nodeIndex])
 	// Remove the root value now corresponding at the last nodes
 	h.pop()
-	// Heapify the heap with it's new state
+	// Heapify the heap with his new state
 	h.down(0)
 	return removedValue
 }
