@@ -16,6 +16,9 @@ Algorithms implementation in Golang
 - Bubble Sort
 - Heap Sort
 
+## Sort Benchmark
+<img alt="Sort benchmark" src="./img/SortBenchmark.png" title="sort-benchmark" width="75%">
+
 ## Maximum Xor - Trie Data Structure
 <img alt="Maximum Xor" src="./img/MaxXor.jpg" title="maximum-xor">
 
